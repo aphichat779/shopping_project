@@ -1,0 +1,39 @@
+/* ปรับสีพื้นหลังของหน้า login */
+body {
+    background-color: #42c8e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* ทำให้ body เต็มความสูงของหน้าจอ */
+}
+
+/* ปรับขนาดและแนวตั้งของฟอร์ม */
+.container {
+    max-width: 400px;
+    padding: 20px;
+    background-color: #eb0909;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* ปรับระยะห่างระหว่างข้อความกับส่วนอื่น ๆ */
+h3,
+p {
+    margin-top: 20px;
+}
+
+/* ปรับสีของปุ่ม Sign In */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* ปรับสีของปุ่ม Sign In เมื่อเม้าส์ไปชี้ */
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* ปรับสีของแจ้งเตือน */
+.alert {
+    margin-top: 20px;
+}
