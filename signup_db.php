@@ -13,28 +13,28 @@
 
         if (empty($firstname)) {
             $_SESSION['error'] = 'กรุณากรอกชื่อ';
-            header("location: index.php");
+            header("location: register.php");
         } else if (empty($lastname)) {
             $_SESSION['error'] = 'กรุณากรอกนามสกุล';
-            header("location: index.php");
+            header("location: register.php");
         } else if (empty($email)) {
             $_SESSION['error'] = 'กรุณากรอกอีเมล';
-            header("location: index.php");
+            header("location: register.php");
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['error'] = 'รูปแบบอีเมลไม่ถูกต้อง';
-            header("location: index.php");
+            header("location: register.php");
         } else if (empty($password)) {
             $_SESSION['error'] = 'กรุณากรอกรหัสผ่าน';
-            header("location: index.php");
+            header("location: register.php");
         } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
             $_SESSION['error'] = 'รหัสผ่านต้องมีความยาวระหว่าง 5 ถึง 20 ตัวอักษร';
-            header("location: index.php");
+            header("location: register.php");
         } else if (empty($c_password)) {
             $_SESSION['error'] = 'กรุณายืนยันรหัสผ่าน';
-            header("location: index.php");
+            header("location: register.php");
         } else if ($password != $c_password) {
             $_SESSION['error'] = 'รหัสผ่านไม่ตรงกัน';
-            header("location: index.php");
+            header("location: register.php");
         } else {
             try {
 
@@ -44,8 +44,8 @@
                 $row = $check_email->fetch(PDO::FETCH_ASSOC);
 
                 if ($row['email'] == $email) {
-                    $_SESSION['warning'] = "มีอีเมลนี้อยู่ในระบบแล้ว <a href='signin.php'>คลิ๊กที่นี่</a> เพื่อเข้าสู่ระบบ";
-                    header("location: index.php");
+                    $_SESSION['warning'] = "มีอีเมลนี้อยู่ในระบบแล้ว <a href='login.php'>คลิ๊กที่นี่</a> เพื่อเข้าสู่ระบบ";
+                    header("location: register.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                     $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, email, password, urole) 
@@ -56,11 +56,11 @@
                     $stmt->bindParam(":password", $passwordHash);
                     $stmt->bindParam(":urole", $urole);
                     $stmt->execute();
-                    $_SESSION['success'] = "สมัครสมาชิกเรียบร้อยแล้ว! <a href='signin.php' class='alert-link'>คลิ๊กที่นี่</a> เพื่อเข้าสู่ระบบ";
-                    header("location: index.php");
+                    $_SESSION['success'] = "สมัครสมาชิกเรียบร้อยแล้ว! <a href='iogin.php' class='alert-link'>คลิ๊กที่นี่</a> เพื่อเข้าสู่ระบบ";
+                    header("location: register.php");
                 } else {
                     $_SESSION['error'] = "มีบางอย่างผิดพลาด";
-                    header("location: index.php");
+                    header("location: register.php");
                 }
 
             } catch(PDOException $e) {
