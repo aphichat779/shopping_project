@@ -9,30 +9,54 @@ body {
 }
 
 header {
-    background-color: #6c07ca;
+    background-color: rgba(108, 7, 202, 0.8);
     color: white;
-    padding: 1rem 0;
+    padding: 1rem 20px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh; /* กำหนดความสูงให้เต็มจอหน้าจอ */
+    margin-bottom: 10px; /* เพิ่มขอบด้านล่าง */
 }
+
 
 h1 {
     text-align: left;
     display: inline-block;
-    margin-left: 20px; 
 }
 
 nav ul {
     list-style: none;
+    display: flex;
+    align-items: center;
 }
 
 nav ul li {
-    display: inline;
     margin-right: 20px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
+}
+
+nav form input[type="text"] {
+    width: 300px; /* กำหนดความกว้างของช่องค้นหา */
+    height: 20px; /* กำหนดความสูงของช่องค้นหา */
+    font-size: 18px; /* กำหนดขนาดตัวอักษรในช่องค้นหา */
+    padding: 10px; /* กำหนดระยะห่างของข้อความในช่องค้นหา */
+    margin-right: 10px; /* กำหนดระยะห่างขวาของช่องค้นหา */
+}
+
+nav form button {
+    height: 40px; /* กำหนดความสูงของปุ่มค้นหา */
+    font-size: 20px; /* กำหนดขนาดตัวอักษรในปุ่มค้นหา */
+    padding: 5px 20px; /* กำหนดระยะห่างของข้อความในปุ่มค้นหา */ 
 }
 
 .product-list {

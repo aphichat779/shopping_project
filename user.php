@@ -56,6 +56,13 @@ if (isset($_POST['add_to_cart'])) {
         echo "ไม่พบสินค้า";
     }
 }
+    // ดึงข้อมูลจำนวนสินค้าในตะกร้า
+$cartQuery = "SELECT COUNT(*) FROM cart WHERE user_id = :user_id";
+$cartStmt = $conn->prepare($cartQuery);
+$cartStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$cartStmt->execute();
+$cartCount = $cartStmt->fetchColumn();
+
 ?>
 
 <!DOCTYPE html>
@@ -68,16 +75,23 @@ if (isset($_POST['add_to_cart'])) {
     <link rel="stylesheet" href="css/user_styles.css">
 </head>
 <body>
-    <header>
-        <h1>ช็อปเลย</h1>
-        <nav>
-            <ul>
-                <li><a href="user.php">หน้าแรก</a></li>
-                <li><a href="cart.php"><i class="material-icons">shopping_cart</i></a></li>
-                <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
-                <li><a href="logout.php">ออกจากระบบ</a></li>
-            </ul>
-        </nav>
+<header>
+    <h1>ช็อปเลย</h1>
+    <nav>
+        <ul>
+            <li><a href="user.php">หน้าแรก</a></li>
+            <li>
+                <form method="get" action="search.php">
+                    <input type="text" name="query" placeholder="ค้นหาสินค้า...">
+                    <button type="submit"><i class="material-icons">search</i></button>
+                </form>
+            </li>
+            <li><a href="cart.php"><i class="material-icons">shopping_cart</i> <?php echo $cartCount; ?></a></li>
+            <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
+            <li><a href="logout.php">logout</a></li>
+
+        </ul>
+    </nav>
     </header>
     
     <section class="product-list">
