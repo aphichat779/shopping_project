@@ -69,11 +69,10 @@ if (isset($_POST['add_to_cart'])) {
 </head>
 <body>
     <header>
-        <h1>ร้านค้าออนไลน์</h1>
+        <h1>ช็อปเลย</h1>
         <nav>
             <ul>
                 <li><a href="user.php">หน้าแรก</a></li>
-                <li><a href="user.php">สินค้า</a></li>
                 <li><a href="cart.php"><i class="material-icons">shopping_cart</i></a></li>
                 <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
                 <li><a href="logout.php">ออกจากระบบ</a></li>

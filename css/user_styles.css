@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background-color: #4f1ffc;
+    background-color: #6c07ca;
     color: white;
     padding: 1rem 0;
     text-align: center;
@@ -18,7 +18,7 @@ header {
 h1 {
     text-align: left;
     display: inline-block;
-    margin-left: 20px; /* สามารถปรับค่า margin-left ตามที่คุณต้องการ */
+    margin-left: 20px; 
 }
 
 nav ul {
