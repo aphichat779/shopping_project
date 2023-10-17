@@ -67,6 +67,7 @@ $cartCount = $cartStmt->fetchColumn();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,30 +75,30 @@ $cartCount = $cartStmt->fetchColumn();
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/user_styles.css">
 </head>
-<body>
-<header>
-    <h1>ช็อปเลย</h1>
-    <nav>
-        <ul>
-            <li><a href="user.php">หน้าแรก</a></li>
-            <li>
-                <form method="get" action="search.php">
-                    <input type="text" name="query" placeholder="ค้นหาสินค้า...">
-                    <button type="submit"><i class="material-icons">search</i></button>
-                </form>
-            </li>
-            <li><a href="cart.php"><i class="material-icons">shopping_cart</i> <?php echo $cartCount; ?></a></li>
-            <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
-            <li><a href="logout.php">logout</a></li>
 
-        </ul>
-    </nav>
+<body>
+    <header>
+        <h1>ช็อปเลย</h1>
+        <nav>
+            <ul>
+                <li><a href="user.php">หน้าแรก</a></li>
+                <li>
+                    <form method="get" action="search.php">
+                        <input type="text" name="query" placeholder="ค้นหาสินค้า...">
+                        <button type="submit"><i class="material-icons">search</i></button>
+                    </form>
+                </li>
+                <li><a href="cart.php"><i class="material-icons">shopping_cart</i> <?php echo $cartCount; ?></a></li>
+                <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
+                <li><a href="logout.php">logout</a></li>
+            </ul>
+        </nav>
     </header>
-    
+
     <section class="product-list">
-    <h2>สินค้าทั้งหมด</h2>
-    <div class="product-grid">
-        <?php foreach ($products as $product): ?>
+        <h2>สินค้าทั้งหมด</h2>
+        <div class="product-grid">
+            <?php foreach ($products as $product): ?>
             <div class="product">
                 <img class="product-image" src="<?php echo $product["image_path"]; ?>" alt="<?php echo $product["name"]; ?>">
                 <h3 class="product-name"><?php echo $product["name"]; ?></h3>
@@ -109,9 +110,10 @@ $cartCount = $cartStmt->fetchColumn();
                     <button type="submit" class="add-to-cart-button" name="add_to_cart">เพิ่มไปยังรถเข็น</button>
                 </form>
             </div>
-        <?php endforeach; ?>
-    </div>
+            <?php endforeach; ?>
+        </div>
     </section>
-    
+
 </body>
+
 </html>

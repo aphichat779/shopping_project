@@ -9,8 +9,8 @@ body {
 }
 
 header {
-    background-color: rgba(108, 7, 202, 0.8);
-    color: white;
+    background-color: rgba(135, 69, 211, 0.8);
+    color: rgb(0, 0, 0);
     padding: 1rem 20px;
     text-align: center;
     display: flex;
@@ -57,6 +57,19 @@ nav form button {
     height: 40px; /* กำหนดความสูงของปุ่มค้นหา */
     font-size: 20px; /* กำหนดขนาดตัวอักษรในปุ่มค้นหา */
     padding: 5px 20px; /* กำหนดระยะห่างของข้อความในปุ่มค้นหา */ 
+}
+
+nav ul li:last-child a {
+    background-color: #dc3545; /* สีของปุ่ม Logout */
+    padding: 10px 20px;
+    border-radius: 5px; /* ทำให้มีขอบโค้งบนปุ่ม */
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+nav ul li:last-child a:hover {
+    background-color: #bd2130; /* สีที่ปุ่มจะเปลี่ยนเมื่อนำเมาส์ไปวางบนปุ่ม */
 }
 
 .product-list {
