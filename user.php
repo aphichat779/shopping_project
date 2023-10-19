@@ -79,15 +79,12 @@ $cartCount = $cartStmt->fetchColumn();
 <body>
     <header>
         <h1>ช็อปเลย</h1>
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="ค้นหาสินค้า...">
+                <button id="search-button"><i class="material-icons">search</i></button>
+            </div>
         <nav>
             <ul>
-                <li><a href="user.php">หน้าแรก</a></li>
-                <li>
-                    <form method="get" action="search.php">
-                        <input type="text" name="query" placeholder="ค้นหาสินค้า...">
-                        <button type="submit"><i class="material-icons">search</i></button>
-                    </form>
-                </li>
                 <li><a href="cart.php"><i class="material-icons">shopping_cart</i> <?php echo $cartCount; ?></a></li>
                 <li><span>ชื่อผู้ใช้: <?php echo $user['firstname'] . ' ' . $user['lastname']; ?></span></li>
                 <li><a href="logout.php">logout</a></li>

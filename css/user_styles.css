@@ -45,20 +45,6 @@ nav ul li a {
     text-decoration: none;
 }
 
-nav form input[type="text"] {
-    width: 300px; /* กำหนดความกว้างของช่องค้นหา */
-    height: 20px; /* กำหนดความสูงของช่องค้นหา */
-    font-size: 18px; /* กำหนดขนาดตัวอักษรในช่องค้นหา */
-    padding: 10px; /* กำหนดระยะห่างของข้อความในช่องค้นหา */
-    margin-right: 10px; /* กำหนดระยะห่างขวาของช่องค้นหา */
-}
-
-nav form button {
-    height: 40px; /* กำหนดความสูงของปุ่มค้นหา */
-    font-size: 20px; /* กำหนดขนาดตัวอักษรในปุ่มค้นหา */
-    padding: 5px 20px; /* กำหนดระยะห่างของข้อความในปุ่มค้นหา */ 
-}
-
 nav ul li:last-child a {
     background-color: #dc3545; /* สีของปุ่ม Logout */
     padding: 10px 20px;
@@ -105,4 +91,28 @@ nav ul li:last-child a:hover {
 
 .add-to-cart-button:hover {
     background-color: #df5900;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* ย้ายช่องค้นหาไปทางขวา */
+    margin-right: 20px; /* ขอบขวาของช่องค้นหา */
+}
+
+#search-input {
+    padding: 11px; /* ปรับขนาดพื้นที่ padding */
+    font-size: 23px; /* ปรับขนาดตัวอักษร */
+    border: 0px solid #ccc;
+}
+
+#search-button {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 0;
+    padding:  10.5px; /* ปรับขนาดของปุ่มค้นหา */
+}
+
+#search-button:hover {
+    background-color: #ffffff;
 }

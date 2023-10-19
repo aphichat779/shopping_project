@@ -86,7 +86,7 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+       document.addEventListener('DOMContentLoaded', function() {
             const removeButtons = document.querySelectorAll('.remove-button');
             removeButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -95,13 +95,15 @@ $cartItems = $cartStmt->fetchAll(PDO::FETCH_ASSOC);
                         method: 'POST',
                         body: JSON.stringify({ productId: productId }),
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json' // ตั้งค่า Content-Type เป็น application/json
                         }
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        // หลังจากลบสินค้าแล้ว รีเฟรชหน้าเว็บ
-                        location.reload();
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload(); // รีโหลดหน้าเว็บหลังจากลบสินค้าเสร็จสิ้น
+                        } else {
+                            console.error('เกิดข้อผิดพลาด:', response.status);
+                        }
                     })
                     .catch(error => {
                         console.error('เกิดข้อผิดพลาด:', error);

@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':cart_id', $productId, PDO::PARAM_INT);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     if ($stmt->execute()) {
-        http_response_code(200); // ส่งรหัส HTTP 200 OK
+        http_response_code(200);
     } else {
-        http_response_code(500); // ส่งรหัส HTTP 500 Internal Server Error
+        http_response_code(500); 
     }
 } else {
-    http_response_code(405); // ส่งรหัส HTTP 405 Method Not Allowed
+    http_response_code(405); 
 }
 ?>
