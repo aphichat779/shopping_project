@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_products"])) {
     // อัปโหลดรูปภาพ
     $image_path = "";
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] === UPLOAD_ERR_OK) {
-        $target_dir = "uploads/"; // โฟลเดอร์เก็บรูปภาพ
+        $target_dir = "uploads/"; 
         $image_name = basename($_FILES["image"]["name"]);
         $target_file = $target_dir . $image_name;
 
@@ -88,6 +88,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_stock"])) {
         }
     }
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_product"])) {
+    $product_id = $_POST["product_id"];
+    $edit_name = $_POST["edit_name"];
+    $edit_description = $_POST["edit_description"];
+    $edit_price = $_POST["edit_price"];
+    $edit_stock = $_POST["edit_stock"];
+
+    // อัปโหลดรูปภาพ
+    $edit_image_path = $product["image_path"]; // ให้เริ่มต้นค่าเป็นรูปเดิม
+    if (isset($_FILES["edit_image"]) && $_FILES["edit_image"]["error"] === UPLOAD_ERR_OK) {
+        $target_dir = "uploads/";
+        $edit_image_name = basename($_FILES["edit_image"]["name"]);
+        $edit_target_file = $target_dir . $edit_image_name;
+
+        if (move_uploaded_file($_FILES["edit_image"]["tmp_name"], $edit_target_file)) {
+            $edit_image_path = $edit_target_file;
+        } else {
+            echo "อัปโหลดรูปภาพล้มเหลว";
+        }
+    }
+
+    // ตรวจสอบราคาที่ถูกส่งมาจากฟอร์ม
+    $edit_price = $_POST["edit_price"];
+    if (!is_numeric($edit_price)) {
+        echo "Error: ราคาต้องเป็นตัวเลข";
+        exit();
+    }
+
+    // ใช้ prepared statement เพื่อป้องกัน SQL injection
+    $update_query = "UPDATE products SET name = :edit_name, description = :edit_description, price = :edit_price, image_path = :edit_image_path, stock_quantity = :edit_stock WHERE id = :product_id";
+    $update_stmt = $conn->prepare($update_query);
+    $update_stmt->bindParam(':edit_name', $edit_name, PDO::PARAM_STR);
+    $update_stmt->bindParam(':edit_description', $edit_description, PDO::PARAM_STR);
+    $update_stmt->bindParam(':edit_price', $edit_price, PDO::PARAM_STR);
+    $update_stmt->bindParam(':edit_image_path', $edit_image_path, PDO::PARAM_STR);
+    $update_stmt->bindParam(':edit_stock', $edit_stock, PDO::PARAM_INT);
+    $update_stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+    if ($update_stmt->execute()) {
+        header("Location: admin.php");
+        exit();
+    } else {
+        echo "Error: แก้ไขสินค้าไม่สำเร็จ";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -141,16 +187,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_stock"])) {
         <div class="product-grid">
             <?php foreach ($products as $product): ?>
                 <div class="product">
+                <form method="POST" action="admin.php" enctype="multipart/form-data">
                     <img class="product-image" src="<?php echo $product["image_path"]; ?>" alt="<?php echo $product["name"]; ?>">
+                        <label for="edit_image">รูปภาพ:</label>
+                        <input type="file" name="edit_image" accept="image/*"><br>
                     <h3 class="product-name"><?php echo $product["name"]; ?></h3>
-                    <p class="product-description"><?php echo $product["description"]; ?></p>
-                    <p class="product-price">ราคา: <?php echo number_format($product["price"], 2, '.', ','); ?> บาท</p>
-                    <p class="product-stock">สต็อก: <?php echo $product["stock_quantity"]; ?></p>
-                    <form method="POST" action="admin.php">
                         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                        <label for="stock">เพิ่มสต็อก:</label>
-                        <input type="number" name="stock" min="1" required><br>
-                        <button type="submit" name="add_stock">เพิ่มสต็อก</button>
+                        <label for="edit_name">ชื่อสินค้า:</label>
+                        <input type="text" name="edit_name" value="<?php echo $product['name']; ?>" required><br>
+                    <p class="product-description"><?php echo $product["description"]; ?></p>
+                        <label for="edit_description">คำอธิบาย:</label>
+                        <input type="text" name="edit_description" value="<?php echo $product['description']; ?>"><br>
+                    <p class="product-price">ราคา: <?php echo number_format($product["price"], 2, '.', ','); ?> บาท</p>
+                        <label for="edit_price">ราคา:</label>
+                        <input type="number" name="edit_price" step="0.01" value="<?php echo $product['price']; ?>" required><br>
+                    <p class="product-stock">สต็อก: <?php echo $product["stock_quantity"]; ?></p>
+                        <label for="edit_stock">สต็อก:</label>
+                        <input type="number" name="edit_stock" value="<?php echo $product['stock_quantity']; ?>" required><br>
+                        <button type="submit" name="edit_product">บันทึกการแก้ไข</button>
                     </form>
                 </div>
             <?php endforeach; ?>

@@ -18,7 +18,7 @@
             $_SESSION['error'] = 'กรุณากรอกรหัสผ่าน';
             header("location: login.php");
         } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
-            $_SESSION['error'] = 'รหัสผ่านต้องมีความยาวระหว่าง 5 ถึง 20 ตัวอักษร';
+            $_SESSION['error'] = 'รหัสผ่านไม่ถูกต้อง';
             header("location: login.php");
         } else {
             try {
@@ -40,7 +40,7 @@
                                 header("location: user.php");
                             }
                         } else {
-                            $_SESSION['error'] = 'รหัสผ่านผิด';
+                            $_SESSION['error'] = 'รหัสผ่านไม่ถูกต้อง';
                             header("location: login.php");
                         }
                     } else {
