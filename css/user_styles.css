@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background-color: rgba(135, 69, 211, 0.8);
+    background-color: rgba(98, 27, 186, 0.8);
     color: rgb(0, 0, 0);
     padding: 1rem 20px;
     text-align: center;
@@ -20,10 +20,14 @@ header {
     margin-bottom: 10px; /* เพิ่มขอบด้านล่าง */
 }
 
-
 h1 {
     text-align: left;
     display: inline-block;
+    background: linear-gradient(45deg, #ff0f0f, #ff3e0d, #ffd900, #06ec06, #ff432e, #800080);
+    -webkit-background-clip: text;
+    color: transparent;
+    border: 2px solid #000000; /* เพิ่มขอบสีดำขนาด 2px */
+    padding: 10px; /* เพิ่มระยะห่างของข้อความกับขอบ */
 }
 
 nav ul {
@@ -70,17 +74,39 @@ nav ul li:last-child a:hover {
 
 .product {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
 }
 
 .product-image {
-    width: 200px; 
-    height: 200px; 
-    object-fit: cover; 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-name {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.product-description {
+    margin-top: 10px;
+    color: #888;
+}
+
+.product-price {
+    margin-top: 10px;
+    color: #f36f6f;
+}
+
+.product-stock {
+    margin-top: 10px;
+    color: #4caf50;
 }
 
 .add-to-cart-button {
+    margin-top: 10px;
     background-color: #ff781f;
     color: white;
     border: none;
@@ -93,26 +119,100 @@ nav ul li:last-child a:hover {
     background-color: #df5900;
 }
 
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 .search-bar {
+    position: relative;
+    width: 50%;
+    max-width: 500px;
+    background: rgb(255, 255, 255,0.6);
     display: flex;
     align-items: center;
-    margin-left: auto; /* ย้ายช่องค้นหาไปทางขวา */
-    margin-right: 20px; /* ขอบขวาของช่องค้นหา */
+    border-radius: 60px;
+    padding: 10px 20px;
+ }
+ 
+ .search-bar input {
+     background: transparent;
+     flex: 1;
+     border: 0;
+     outline: none;
+     padding: 10px 20px;
+     font-size: 18px;
+     color: #000000;
+ }
+ 
+ ::placeholder {
+     color: #000000;
+ }
+ 
+ .search-bar button {
+     position: absolute;
+     right: 10px;
+     border: 0;
+     border-radius: 50%;
+     width: 40px;
+     height: 40px;
+     background: #b70046;
+     cursor: pointer;
+ }
+ 
+ .container {
+    display: flex;
+    align-items: flex-start;
 }
 
-#search-input {
-    padding: 11px; /* ปรับขนาดพื้นที่ padding */
-    font-size: 23px; /* ปรับขนาดตัวอักษร */
-    border: 0px solid #ccc;
-}
-
-#search-button {
+.search-sidebar {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
     background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    border: 0;
-    padding:  10.5px; /* ปรับขนาดของปุ่มค้นหา */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#search-button:hover {
-    background-color: #ffffff;
+.search-sidebar h4 {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
+
+.search-sidebar form {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-sidebar label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.search-sidebar select,
+.search-sidebar input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-sidebar button {
+    background-color: #ee4d2d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-sidebar button:hover {
+    background-color: #ff5733;
+}
+

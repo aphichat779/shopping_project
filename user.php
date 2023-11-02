@@ -78,11 +78,13 @@ $cartCount = $cartStmt->fetchColumn();
 
 <body>
     <header>
-        <h1>ช็อปเลย</h1>
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="ค้นหาสินค้า...">
-                <button id="search-button"><i class="material-icons">search</i></button>
-            </div>
+        <h1>SHOPPING</h1>
+        <div class="search-bar">
+        <form method="get" action="search.php"> 
+            <input type="text" id="search-input" name="query" placeholder="ค้นหาสินค้า...">
+            <button type="submit" id="search-button"><i class="material-icons">search</i></button>
+        </form>
+        </div>
         <nav>
             <ul>
                 <li><a href="cart.php"><i class="material-icons">shopping_cart</i> <?php echo $cartCount; ?></a></li>
@@ -91,6 +93,25 @@ $cartCount = $cartStmt->fetchColumn();
             </ul>
         </nav>
     </header>
+
+    <section class="container">
+        <section class="search-sidebar">
+            <h4>ค้นหาตามหมวดหมู่และช่วงราคา</h4>
+            <form method="get" action="user.php">
+                <label for="category">เลือกหมวดหมู่:</label>
+                <select id="category" name="category">
+                    <option value="เสื้อผ้า">เสื้อผ้า</option>
+                    <option value="อุปกรณ์อิเล็กทรอนิกส์">อุปกรณ์อิเล็กทรอนิกส์</option>
+                    <option value="เครื่องสำอาง">เครื่องสำอาง</option>
+                    <!-- เพิ่มตัวเลือกหมวดหมู่ต่าง ๆ ตามที่คุณต้องการ -->
+                </select>
+                <label for="min-price">ราคาต่ำสุด:</label>
+                <input type="number" id="min-price" name="min_price" value="0">
+                <label for="max-price">ราคาสูงสุด:</label>
+                <input type="number" id="max-price" name="max_price" value="">
+                <button type="submit"><i class="material-icons">search</i> ค้นหา</button>
+            </form>
+        </section>
 
     <section class="product-list">
         <h2>สินค้าทั้งหมด</h2>

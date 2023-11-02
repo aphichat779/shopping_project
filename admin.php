@@ -147,8 +147,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_stock"])) {
                     <p class="product-description"><?php echo $product["description"]; ?></p>
                     <p class="product-price">ราคา: <?php echo number_format($product["price"], 2, '.', ','); ?> บาท</p>
                     <p class="product-stock">สต็อก: <?php echo $product["stock_quantity"]; ?></p>
-                    <form method="POST" action="edit_product.php">
-                        <input type="hidden" name="ID" value="<?php echo $product['id']; ?>">
+                    <form method="POST" action="edit_product.php" enctype="multipart/form-data">
+                        <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                         <button type="submit" name="edit_product">แก้ไขสินค้า</button>
                     </form>
                 </div>

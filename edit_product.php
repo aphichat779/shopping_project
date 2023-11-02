@@ -8,30 +8,56 @@ if (!isset($_SESSION['admin_login'])) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_product"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["product_id"])) {
     $product_id = $_POST["product_id"];
-    $name = $_POST["name"];
-    $description = $_POST["description"];
-    $price = $_POST["price"];
-    $stock = $_POST["stock"];
 
-    $image_path = $_POST["image_path"]; // ใช้รูปภาพเดิมเริ่มต้น
+    $query = "SELECT * FROM products WHERE id = :product_id";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+        header("Location: admin.php");
+        exit();
+    }
+} else {
+    header("Location: admin.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_product"])) {
+    $name = htmlspecialchars($_POST["name"]);
+    $description = htmlspecialchars($_POST["description"]);
+    $price = floatval($_POST["price"]);
+    $stock = intval($_POST["stock"]);
+
+    $image_path = $_POST["image_path"];
 
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] === UPLOAD_ERR_OK) {
         $target_dir = "uploads/";
         $image_name = basename($_FILES["image"]["name"]);
         $target_file = $target_dir . $image_name;
 
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-            $image_path = $target_file;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        $allowed_extensions = array("jpg", "jpeg", "png", "gif");
+
+        if (in_array($imageFileType, $allowed_extensions)) {
+            if ($_FILES["image"]["size"] <= 2000000) {
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    $image_path = $target_file;
+                } else {
+                    echo "อัปโหลดรูปภาพล้มเหลว";
+                }
+            } else {
+                echo "ขนาดไฟล์รูปภาพใหญ่เกินไป (ไม่เกิน 2 MB)";
+            }
         } else {
-            echo "อัปโหลดรูปภาพล้มเหลว";
+            echo "รูปแบบไฟล์ไม่ถูกต้อง (รองรับเฉพาะ JPG, JPEG, PNG, GIF)";
         }
     }
 
-    // ตรวจสอบความถูกต้องของข้อมูล (ชื่อ, ราคา, สต็อก, รูปภาพ, ฯลฯ)
-
-    // ปรับปรุงข้อมูลสินค้าในฐานข้อมูล
     $update_query = "UPDATE products SET name = :name, description = :description, price = :price, stock_quantity = :stock, image_path = :image_path WHERE id = :product_id";
     $update_stmt = $conn->prepare($update_query);
     $update_stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -42,19 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_product"])) {
     $update_stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
 
     if ($update_stmt->execute()) {
-        // อัปเดตสินค้าสำเร็จ
         header("Location: admin.php");
         exit();
     } else {
         echo "Error: อัปเดตสินค้าไม่สำเร็จ";
     }
 } else {
-    // Redirect to admin.php if product ID is not provided
     header("Location: admin.php");
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,8 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update_product"])) {
             <label for="stock">สต็อก:</label>
             <input type="number" name="stock" value="<?php echo $product['stock_quantity']; ?>" required><br>
 
-            <label for="image">รูปภาพ:</label>
-            <input type="file" name="image" accept="image/*"><br>
+            <label for="image">รูปภาพ (เฉพาะ: JPG, JPEG, PNG, GIF, ขนาดไม่เกิน 2 MB):</label>
+            <input type="file" name="image" accept="image/jpeg, image/png, image/gif"><br>
 
             <input type="submit" name="update_product" value="บันทึกการแก้ไข">
         </form>
